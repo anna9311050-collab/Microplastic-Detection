@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>微塑獵人</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+<style>
+:root{--bg:#EFEBE2;--card:#FBF9F4;--ink:#16181A;--mute:#6C6A63;--line:#D8D3C6;--red:#D9361E;--amber:#C98100;--green:#1E5B4B;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141513;--card:#1D1F1C;--ink:#EFEBE2;--mute:#9A978D;--line:#34362F;--red:#FF6A52;--amber:#E8A92B;--green:#6FCBA8}}
+:root[data-theme="dark"]{--bg:#141513;--card:#1D1F1C;--ink:#EFEBE2;--mute:#9A978D;--line:#34362F;--red:#FF6A52;--amber:#E8A92B;--green:#6FCBA8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:430px;margin:0 auto;padding:0 20px 56px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0 10px}
+.logo{font-weight:900;font-size:17px;letter-spacing:.08em}
+.logo i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red);margin-right:8px}
+.pill{display:flex;gap:7px;align-items:center;border:1.5px solid var(--ink);border-radius:99px;padding:7px 14px 7px 11px;background:transparent;font-size:13px;font-weight:700}
+h1{font-size:46px;line-height:1.08;font-weight:900;letter-spacing:-.02em;margin:26px 0 12px}
+h1 em{font-style:normal;color:var(--red)}
+.sub{color:var(--mute);font-size:14px;line-height:1.7;margin:0 0 22px}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line);margin-bottom:22px}
+.cats div{padding:9px 0 8px;text-align:center;border-right:1px solid var(--line)}
+.cats div:last-child{border:0}
+.cats b{display:block;font-size:18px;font-weight:900}
+.cats span{font-size:9.5px;color:var(--mute);letter-spacing:.05em}
+.cats .on{background:var(--ink);color:var(--bg)}.cats .on span{color:var(--bg);opacity:.7}
+.cap{display:grid;grid-template-columns:1.5fr 1fr;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:20px 10px;border:1.5px solid var(--ink);font-weight:700;font-size:16px;border-radius:4px;background:transparent}
+.btn.fill{background:var(--ink);color:var(--bg)}
+.btn:active{transform:translateY(1px)}
+.btn.sm{padding:12px 8px;font-size:13px}
+.hint{font-size:12px;color:var(--mute);margin:10px 0 0}
+.shot{position:relative;margin-top:18px;border:1px solid var(--line);overflow:hidden;background:#000}
+.shot img{display:block;width:100%;max-height:280px;object-fit:cover}
+.shot .ln{position:absolute;left:0;right:0;height:3px;background:var(--red);box-shadow:0 0 18px 5px var(--red);animation:s 1.4s ease-in-out infinite}
+@keyframes s{0%,100%{top:0}50%{top:calc(100% - 3px)}}
+.shot .tag{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 12px;font-weight:500}
+.rc{margin-top:22px;background:var(--card);border:1px solid var(--line);position:relative}
+.rc:before,.rc:after{content:"";position:absolute;left:0;right:0;height:8px;background:radial-gradient(circle at 6px 0,transparent 5px,var(--card) 5.5px) 0 0/12px 8px repeat-x}
+.rc:before{top:-8px;transform:scaleY(-1)}.rc:after{bottom:-8px}
+.rc .in{padding:22px 20px}
+.meta{display:flex;justify-content:space-between;font-size:11px;color:var(--mute);letter-spacing:.06em;border-bottom:1px dashed var(--line);padding-bottom:12px}
+.prod{font-size:22px;font-weight:900;margin:16px 0 4px;line-height:1.3}
+.kind{font-size:12px;color:var(--mute)}
+.stamp{display:inline-block;margin:18px 0 6px;border:3px solid;padding:6px 16px;font-size:30px;font-weight:900;letter-spacing:.06em;transform:rotate(-3deg);border-radius:3px}
+.stamp.red{color:var(--red)}.stamp.green{color:var(--green)}.stamp.grey{color:var(--mute)}
+.sum{font-size:14px;line-height:1.75;margin:10px 0 4px}
+.h2{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.12em;margin:24px 0 6px;padding-bottom:6px;border-bottom:1.5px solid var(--ink)}
+.f{padding:13px 0;border-bottom:1px dashed var(--line);display:grid;grid-template-columns:22px 1fr;gap:8px}
+.f .n{font-size:12px;color:var(--mute);padding-top:2px}
+.f b{font-size:15px}.f p{margin:3px 0 0;font-size:13px;line-height:1.65;color:var(--mute)}
+.chip{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:2px;margin-left:6px;vertical-align:2px;font-weight:700;color:#fff}
+.chip.red{background:var(--red)}.chip.amber{background:var(--amber)}
+.tips{margin:0;padding:0;list-style:none;counter-reset:t}
+.tips li{counter-increment:t;font-size:13.5px;line-height:1.7;padding:9px 0 9px 30px;position:relative;border-bottom:1px dashed var(--line)}
+.tips li:before{content:counter(t,decimal-leading-zero);position:absolute;left:0;color:var(--red);font-weight:900;font-size:12px;top:11px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.foot{font-size:10.5px;color:var(--mute);margin-top:16px;line-height:1.6;text-align:center}
+.hist{margin-top:40px}
+.hr{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:13px 0;text-align:left}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.hr span.t{flex:1;min-width:0;font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hr small{color:var(--mute);font-size:11px}
+.err{margin-top:14px;font-size:13px;padding:11px 13px;border-left:3px solid var(--amber);background:var(--card);line-height:1.6}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end}
+.sh{background:var(--bg);width:100%;max-width:430px;margin:0 auto;max-height:88%;overflow:auto;padding:20px 20px calc(28px + env(safe-area-inset-bottom,0px));border-radius:14px 14px 0 0}
+.radar{display:block;margin:6px auto 4px;width:100%;max-width:300px}
+.nb{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.nb .d{width:54px;font-size:12px;color:var(--mute);flex:none}
+.nb div.x{flex:1;font-size:14px;font-weight:500;line-height:1.4}.nb small{display:block;color:var(--mute);font-size:11.5px;font-weight:400}
+@media print{
+ body *{visibility:hidden}.rc,.rc *{visibility:visible}
+ .rc{position:absolute;left:0;top:0;width:100%;border:0}.rc:before,.rc:after{display:none}
+ .noprint{display:none!important}html,body,.rc{background:#fff!important;color:#000!important}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useRef,useEffect}=React;
+const CATS=[['食','FOOD'],['衣','WEAR'],['住','HOME'],['行','MOVE'],['育','LEARN'],['樂','PLAY']];
+const PROMPT=`你是「微塑獵人」的塑膠成分檢測員。使用者拍了一張日常物品照片（食、衣、住、行、育、樂皆可：食品與包材、衣物吊牌、家用清潔與家飾、輪胎與車用品、文具教材、玩具與運動用品等）。
+請讀取圖中可見的成分表、材質標示或包裝，找出所有塑膠相關成分或材質：固態微粒（Polyethylene、PE、PP、PMMA、Nylon、PET、PTFE、聚苯乙烯、聚氨酯等，level 填 red）、液態或半固態合成聚合物（Dimethicone、Carbomer、Acrylates Copolymer、Polyquaternium、PVP、PEG-、矽氧烷類，level 填 amber）、會脫落微纖維的合成布料（聚酯、尼龍、壓克力、彈性纖維）、含塑膠的包材（內膜、淋膜紙、塑膠茶包）。
+若圖中沒有文字可判讀，請依物品類型合理推斷，並在 summary 說明是推斷。
+只輸出 JSON，不要任何其他文字：
+{"product":"產品名稱","category":"食|衣|住|行|育|樂","readable":true或false,"summary":"一到兩句白話結論","findings":[{"name":"成分或材質名稱","where":"出現位置（成分表/材質標/包材/推測）","type":"固態微粒|合成聚合物|合成纖維|塑膠包材","level":"red|amber","note":"一句話說明環境影響"}],"prevention":["針對此物品的3到4條具體預防或替代建議"]}
+找不到任何塑膠就讓 findings 為空陣列。使用繁體中文。`;
+const DEMO=[
+{product:'深層去角質磨砂洗面乳（示範）',category:'住',readable:true,summary:'成分表含聚乙烯顆粒與多種合成聚合物，沖洗後會直接進入排水系統。',findings:[{name:'Polyethylene',where:'成分表',type:'固態微粒',level:'red',note:'磨砂顆粒小於 5mm，污水處理廠難以攔截，最終進入海洋。'},{name:'Dimethicone',where:'成分表',type:'合成聚合物',level:'amber',note:'矽靈，在水中難以降解。'}],prevention:['改選含核桃殼粉、海鹽、蔗糖或燕麥的去角質','買洗臉皂、洗髮餅等無塑配方','選擇有 Zero Plastic Inside 標章的產品']},
+{product:'運動排汗衫（示範）',category:'衣',readable:true,summary:'吊牌標示聚酯纖維與彈性纖維，每次洗滌都會釋出微纖維。',findings:[{name:'Polyester 聚酯纖維 88%',where:'材質標',type:'合成纖維',level:'red',note:'洗衣時脫落的微纖維是海洋微塑膠的大宗來源。'},{name:'Elastane 彈性纖維 12%',where:'材質標',type:'合成纖維',level:'amber',note:'與聚酯混紡，難以回收。'}],prevention:['優先選棉、麻、羊毛等天然纖維','合成衣物裝入濾袋洗滌，並減少洗滌次數','洗衣機加裝微纖維濾網']},
+{product:'茶包（示範）',category:'食',readable:true,summary:'三角立體茶包常以尼龍或 PET 製成，熱水沖泡時可能釋出大量塑膠微粒。',findings:[{name:'Nylon / PET 網袋',where:'包材',type:'塑膠包材',level:'red',note:'研究指出單一茶包泡煮可釋出數十億奈米塑膠微粒。'}],prevention:['改用茶葉加濾網或紙質濾袋','選擇標示 PLA 以外的可堆肥紙材','避免用塑膠杯盛裝熱飲']}
+];
+const LV={red:'var(--red)',amber:'var(--amber)',green:'var(--green)',grey:'var(--mute)'};
+
+function shrink(file){return new Promise((res,rej)=>{
+  const img=new Image(),u=URL.createObjectURL(file);
+  img.onload=()=>{const k=Math.min(1,1280/Math.max(img.width,img.height));
+    const c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);
+    c.toBlob(b=>res({blob:b,url:c.toDataURL('image/jpeg',.7)}),'image/jpeg',.8)};
+  img.onerror=rej;img.src=u;});}
+const verdict=r=>!r.readable&&!r.findings.length?['grey','看不清楚']:r.findings.length?['red','有微塑膠']:['green','未發現'];
+const fmt=d=>d.toLocaleString('zh-TW',{hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+
+const NEAR=[
+['洗沐用品區','超市',120,'red','磨砂洗面乳 3 款含聚乙烯'],['運動服飾店','衣',260,'red','排汗衣多為聚酯與彈性纖維'],
+['手搖飲料店','食',310,'amber','三角茶包網袋疑為尼龍'],['生活雜貨','住',420,'red','菜瓜布、拖把多為合成纖維'],
+['文具書店','育',560,'amber','螢光筆、膠帶含塑膠聚合物'],['玩具專賣','樂',740,'red','黏土、軟膠玩具含 PVC / 聚氨酯']];
+
+function Radar({list,self}){
+  const pts=list.map((n,i)=>{const a=(i*61+20)*Math.PI/180,r=18+n[2]/800*74;return [150+r*Math.cos(a),100+r*Math.sin(a)*.72,n[3]]});
+  return <svg className="radar" viewBox="0 0 300 200"><g fill="none" stroke="var(--line)" strokeWidth="1">
+   {[30,60,92].map(r=><ellipse key={r} cx="150" cy="100" rx={r} ry={r*.72}/>)}<path d="M150 6V194M40 100H260"/></g>
+   {pts.map((p,i)=><circle key={i} cx={p[0]} cy={p[1]} r="6" fill={LV[p[2]]}/>)}
+   <circle cx="150" cy="100" r="5" fill="var(--ink)"/><circle cx="150" cy="100" r="10" fill="none" stroke="var(--ink)"/>
+   <text x="150" y="130" textAnchor="middle" fontSize="9" fill="var(--mute)" fontFamily="Noto Sans TC">你</text></svg>;
+}
+
+function App(){
+  const [img,setImg]=useState(null),[busy,setBusy]=useState(false),[res,setRes]=useState(null),[err,setErr]=useState('');
+  const [hist,setHist]=useState([]),[near,setNear]=useState(false),[geo,setGeo]=useState('');
+  const cam=useRef(),up=useRef(),dn=useRef(0);
+
+  async function pick(e){
+    const f=e.target.files[0];e.target.value='';if(!f)return;
+    setErr('');setRes(null);setBusy(true);
+    let s;try{s=await shrink(f);setImg(s.url);}catch(x){setBusy(false);setErr('這張圖片讀不起來，換一張試試。');return;}
+    let r,demo=false;
+    try{
+      const sample=await claude.use('sample');
+      if(!sample) throw new Error('na');
+      r=await sample.json(PROMPT,{images:[s.blob],cache:false});
+      r.findings=Array.isArray(r.findings)?r.findings:[];r.prevention=r.prevention||[];
+    }catch(x){
+      demo=true;r=DEMO[dn.current++%DEMO.length];
+      setErr('目前無法連上辨識服務（或尚未允許），以下為示範結果，不是這張照片的真實判讀。');
+    }
+    const rec={...r,id:Date.now(),time:new Date(),demo};
+    setRes(rec);setHist(h=>[rec,...h]);setBusy(false);
+    setTimeout(()=>document.getElementById('rc')?.scrollIntoView({behavior:'smooth'}),60);
+  }
+  function openNear(){setNear(true);setGeo('');
+    if(navigator.geolocation)navigator.geolocation.getCurrentPosition(()=>setGeo('已取得定位'),()=>setGeo('未取得定位'),{timeout:4000});else setGeo('未取得定位');}
+  async function save(){
+    const [,v]=verdict(res);
+    const t=`微塑獵人 檢測明細\n${fmt(res.time)}\n\n產品：${res.product}（${res.category}）\n結果：${v}\n${res.summary}\n\n`+
+      res.findings.map((f,i)=>`${i+1}. ${f.name}｜${f.where}｜${f.type}\n   ${f.note}`).join('\n')+
+      `\n\n預防建議：\n`+res.prevention.map((p,i)=>`${i+1}. ${p}`).join('\n');
+    try{const d=await claude.use('downloads');await d.save({filename:'微塑檢測明細.txt',data:new Blob([t],{type:'text/plain;charset=utf-8'})});}
+    catch(x){setErr('此環境不支援儲存，請改用「列印明細」。');}
+  }
+  const catOn=res?.category;
+  const mine=hist.filter(h=>h.findings.length).slice(0,3).map(h=>[h.product,h.category,0,'red','你剛掃描的：'+h.findings[0].name]);
+  const nlist=[...mine,...NEAR];
+  const V=res&&verdict(res);
+  return (<div className="wrap">
+    <div className="top noprint"><div className="logo"><i/>微塑獵人</div>
+      <button className="pill" onClick={openNear}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>附近偵測</button></div>
+    <div className="noprint">
+      <h1>拍一下，<br/>看有沒有<em>塑膠</em>。</h1>
+      <p className="sub">食衣住行育樂，包裝、吊牌、成分表、整個商品都可以拍。不用打字，不用貼成分。</p>
+      <div className="cats">{CATS.map(([c,e])=><div key={c} className={catOn===c?'on':''}><b>{c}</b><span>{e}</span></div>)}</div>
+      <div className="cap">
+        <button className="btn fill" disabled={busy} onClick={()=>cam.current.click()}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13" r="4"/></svg>拍照檢測</button>
+        <button className="btn" disabled={busy} onClick={()=>up.current.click()}>上傳圖片</button>
+      </div>
+      <input ref={cam} type="file" accept="image/*" capture="environment" hidden onChange={pick}/>
+      <input ref={up} type="file" accept="image/*" hidden onChange={pick}/>
+      <p className="hint">拍到成分表或材質標最準；拍不到文字時會依物品類型推斷。</p>
+      {img&&<div className="shot"><img src={img} alt="待檢測照片"/>{busy&&<><div className="ln"/><div className="tag">辨識中，比對塑膠成分…</div></>}</div>}
+      {err&&<div className="err">{err}</div>}
+    </div>
+
+    {res&&!busy&&<div className="rc" id="rc"><div className="in">
+      <div className="meta"><span>MICROPLASTIC REPORT</span><span>NO.{String(res.id).slice(-6)}</span></div>
+      <div className="meta" style={{border:0,paddingTop:6}}><span>{fmt(res.time)}</span><span>{res.demo?'示範資料':'AI 判讀'}</span></div>
+      <div className="prod">{res.product}</div><div className="kind">分類・{res.category}（{CATS.find(c=>c[0]===res.category)?.[1]||''}）</div>
+      <div className={'stamp '+V[0]}>{V[1]}</div>
+      <p className="sum">{res.summary}</p>
+      <div className="h2"><span>檢出項目</span><span>{res.findings.length} 項</span></div>
+      {res.findings.length===0?<p className="sum" style={{color:'var(--mute)'}}>未在可見資訊中發現常見塑膠成分或材質。</p>:
+        res.findings.map((f,i)=><div className="f" key={i}><span className="n">{String(i+1).padStart(2,'0')}</span>
+          <div><b>{f.name}</b><span className={'chip '+f.level}>{f.type}</span><p>位置：{f.where}。{f.note}</p></div></div>)}
+      <div className="h2"><span>怎麼預防</span><span>{res.prevention.length} 招</span></div>
+      <ul className="tips">{res.prevention.map((p,i)=><li key={i}>{p}</li>)}</ul>
+      <div className="acts noprint"><button className="btn sm fill" onClick={()=>window.print()}>列印明細</button><button className="btn sm" onClick={save}>儲存檔案</button></div>
+      <div className="foot">由照片可見資訊判讀，僅供參考，實際請以官方標示為準。<br/>微塑獵人</div>
+    </div></div>}
+
+    {hist.length>0&&<div className="hist noprint">
+      <div className="h2"><span>掃描紀錄</span><span>{hist.length} 件・{hist.filter(h=>h.findings.length).length} 件有塑膠</span></div>
+      {hist.map(h=>{const v=verdict(h);return <button key={h.id} className="hr" onClick={()=>{setRes(h);setTimeout(()=>document.getElementById('rc')?.scrollIntoView({behavior:'smooth'}),50)}}>
+        <span className="dot" style={{background:LV[v[0]]}}/><span className="t">{h.product}</span><small>{h.category}・{v[1]}</small></button>})}
+      <button className="pill" style={{marginTop:14,fontSize:12}} onClick={()=>{setHist([]);setRes(null);setImg(null)}}>清除紀錄</button>
+    </div>}
+
+    {near&&<div className="sheet noprint" onClick={()=>setNear(false)}><div className="sh" onClick={e=>e.stopPropagation()}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline'}}><div style={{fontSize:22,fontWeight:900}}>附近偵測</div><button className="pill" style={{padding:'4px 12px'}} onClick={()=>setNear(false)}>關閉</button></div>
+      <div className="kind" style={{marginTop:4}}>{geo||'定位中…'}</div>
+      <Radar list={nlist}/>
+      <div className="err" style={{marginTop:6}}>目前列出的是示意資料，用來展示功能；真實的商家與商品資料需要另外串接資料庫。你自己掃過、含塑膠的物品會即時加進雷達。</div>
+      <div style={{marginTop:10}}>{nlist.map((n,i)=><div className="nb" key={i}><span className="d">{n[2]?n[2]+' m':'此處'}</span>
+        <div className="x">{n[0]}<small>{n[1]}・{n[4]}</small></div><span className="dot" style={{background:LV[n[3]]}}/></div>)}</div>
+    </div></div>}
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
